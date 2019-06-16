@@ -2,13 +2,13 @@ package dylanTest.service;
 
 import dylanTest.domain.DateModel;
 import dylanTest.domain.OutputModel;
+import dylanTest.util.CalculateDateUtil;
 
 /**
  * Service to calculate days between two given date
  */
 public class CalculateDaysBetweenDatesService {
 
-    private static final int[] DAYS_IN_MONTH = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
     /**
      * Calculate days between two given date
@@ -44,28 +44,14 @@ public class CalculateDaysBetweenDatesService {
         int days = dateModel.getYear() * 365 + dateModel.getDay();
 
         for (int i = 0; i < dateModel.getMonth() - 1; i++) {
-            days += DAYS_IN_MONTH[i];
+            days += CalculateDateUtil.DAYS_IN_MONTH[i];
         }
 
-        days += countNumberOfLeapYears(dateModel);
+        days += CalculateDateUtil.countNumberOfLeapYears(dateModel);
         return days;
     }
 
-    /**
-     * Count number of leap years
-     * if give month is after Feb, include current year, else exclude current year
-     *
-     * @param dateModel give date
-     * @return number of leap years
-     */
-    private int countNumberOfLeapYears(DateModel dateModel) {
-        int year = dateModel.getYear();
 
-        if (dateModel.getMonth() <= 2) {
-            year--;
-        }
-        return year / 4 - year / 100 + year / 400;
-    }
 
 
 }
